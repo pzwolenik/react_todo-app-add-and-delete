@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FilterStatus } from '../../App';
+import { FilterStatus } from '../../types/FilterStatus';
 
 type Props = {
   count: number;

@@ -5,17 +5,15 @@ import { useEffect, useState } from 'react';
 type Props = {
   todo: Todo;
   onDelete: (id: number) => Promise<void | Todo>;
-  deletingTodoIds: number[];
   onUpdate: (id: number, data: Partial<Todo>) => Promise<void | Todo>;
-  updatingTodoIds: number[];
+  loadingTodoIds: number[];
 };
 
 export const TodoItem = ({
   todo,
   onDelete,
-  deletingTodoIds,
   onUpdate,
-  updatingTodoIds,
+  loadingTodoIds,
 }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
@@ -83,7 +81,7 @@ export const TodoItem = ({
                 setNewTitle(todo.title);
               }
             }}
-            disabled={updatingTodoIds.includes(todo.id)}
+            disabled={loadingTodoIds.includes(todo.id)}
             autoFocus
           />
         </form>
@@ -109,10 +107,7 @@ export const TodoItem = ({
       <div
         data-cy="TodoLoader"
         className={classNames('modal overlay', {
-          'is-active':
-            todo.id === 0 ||
-            deletingTodoIds.includes(todo.id) ||
-            updatingTodoIds.includes(todo.id),
+          'is-active': todo.id === 0 || loadingTodoIds.includes(todo.id),
         })}
       >
         <div className="modal-background has-background-white-ter" />
